@@ -10,7 +10,7 @@ public class conectarBD {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String borrar, insertar, updatear;
+        String insertar, updatear;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -20,10 +20,11 @@ public class conectarBD {
             System.out.println(con.toString());
             conectar(con);
 
-            System.out.println("Que tabla quieres borrar");
-            borrar= sc.nextLine();
 
-            upDelTabla(con, "DROP TABLE IF EXISTS " + borrar);
+
+            upDelTabla(con, "DROP TABLE IF EXISTS Likes");
+            upDelTabla(con, "DROP TABLE IF EXISTS Post");
+            upDelTabla(con, "DROP TABLE IF EXISTS Usuarios");
 
 
             crearTabla(con, "CREATE TABLE IF NOT EXISTS Usuarios " + "(idUsuarios INTEGER, " + "Nombre VARCHAR(45), " +
@@ -37,9 +38,9 @@ public class conectarBD {
                             + "updated_at DATE, "
                             + "PRIMARY KEY (idPost), "+ "FOREIGN KEY (idUsuarios) REFERENCES Usuarios(idUsuarios))");
 
-            System.out.println("elije el fichero de la tabla que quieres insertar datos");
-            insertar = sc.nextLine();
-            insertarDatos(con, insertar);
+            insertarDatos(con, "Usuarios.txt");
+            insertarDatos(con, "Post.txt");
+            insertarDatos(con, "Likes.txt");
 
 
             System.out.println("Que quieres actualizar");
